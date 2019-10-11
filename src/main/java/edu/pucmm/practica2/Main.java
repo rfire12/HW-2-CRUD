@@ -40,7 +40,7 @@ public class Main {
             fields.put("field","Modificar");
             fields.put("estudiante", estudiante);
             fields.put("endpoint", "/modificar-estudiante");
-            fields.put("matricula_enabled", "disabled");
+            fields.put("matricula_enabled", "readonly");
             return renderFreemarker(fields,"/formulario.ftl");
         });
 
@@ -55,6 +55,12 @@ public class Main {
         post("/crear-estudiante", (request, response) -> {
             ServicioEstudiantes.getInstance().crearEstudiante(request.queryParams("matricula"),
                     request.queryParams("nombre"), request.queryParams("apellido"), request.queryParams("telefono"));
+            response.redirect("/");
+            return "";
+        });
+
+        post("/eliminar-estudiante/:matricula", (request, response) -> {
+            ServicioEstudiantes.getInstance().eliminarEstudiante(request.params("matricula"));
             response.redirect("/");
             return "";
         });

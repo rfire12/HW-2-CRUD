@@ -34,8 +34,18 @@ public class ServicioEstudiantes {
         return miEstudiante;
     }
 
-    public void modificarEstudiante(String matricula, String nombre, String apellido, String telefono){
+    public void eliminarEstudiante(String matricula){
         int index = 0, studentPosition = 0;
+        for (Estudiante estudiante: misEstudiantes) {
+            if(estudiante.getMatricula().equalsIgnoreCase(matricula))
+                studentPosition = index;
+            index++;
+        }
+        misEstudiantes.remove(studentPosition);
+    }
+
+    public void modificarEstudiante(String matricula, String nombre, String apellido, String telefono){
+        int index = 0, studentPosition = -1;
         for (Estudiante estudiante: misEstudiantes) {
             if(estudiante.getMatricula().equalsIgnoreCase(matricula))
                 studentPosition = index;

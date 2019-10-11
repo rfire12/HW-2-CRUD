@@ -31,7 +31,9 @@
               <a class="btn btn-primary" href="modificar-estudiante/${estudiante.matricula}" role="button">Modificar</a>
             </td>
             <td>
-              <a class="btn btn-danger" href="eliminar-estudiante/${estudiante.matricula}" role="button">Eliminar</a>
+              <form method="POST" action="eliminar-estudiante/${estudiante.matricula}">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+              </form>
             </td>
           </tr>
         </#list>
