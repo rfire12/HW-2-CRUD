@@ -20,7 +20,6 @@ public class Main {
 
         get("/", (request, response) -> {
             Map<String, Object> estudiantes = new HashMap<>();
-            System.out.println(ServicioEstudiantes.getInstance().getMisEstudiantes());
             estudiantes.put("misEstudiantes", ServicioEstudiantes.getInstance().getMisEstudiantes());
             return renderFreemarker(estudiantes, "/main.ftl");
         });
@@ -31,6 +30,7 @@ public class Main {
             fields.put("field","Crear");
             fields.put("estudiante", estudiante);
             fields.put("endpoint", "crear-estudiante");
+            fields.put("matricula_enabled", "");
             return renderFreemarker(fields,"/formulario.ftl");
         });
 
@@ -39,9 +39,17 @@ public class Main {
             Estudiante estudiante = ServicioEstudiantes.getInstance().buscarEstudiante(request.params("matricula"));
             fields.put("field","Modificar");
             fields.put("estudiante", estudiante);
-            fields.put("endpoint", "modificar-estudiante");
-
+            fields.put("endpoint", "/modificar-estudiante");
+            fields.put("matricula_enabled", "disabled");
             return renderFreemarker(fields,"/formulario.ftl");
+        });
+
+        post("/modificar-estudiante", (request, response) -> {
+            ServicioEstudiantes.getInstance().modificarEstudiante(request.queryParams("matricula"),
+                    request.queryParams("nombre"), request.queryParams("apellido"), request.queryParams("telefono"));
+
+            response.redirect("/");
+            return "";
         });
 
         post("/crear-estudiante", (request, response) -> {

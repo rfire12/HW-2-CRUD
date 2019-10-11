@@ -34,6 +34,18 @@ public class ServicioEstudiantes {
         return miEstudiante;
     }
 
+    public void modificarEstudiante(String matricula, String nombre, String apellido, String telefono){
+        int index = 0, studentPosition = 0;
+        for (Estudiante estudiante: misEstudiantes) {
+            if(estudiante.getMatricula().equalsIgnoreCase(matricula))
+                studentPosition = index;
+            index++;
+        }
+        misEstudiantes.get(studentPosition).setNombre(nombre);
+        misEstudiantes.get(studentPosition).setApellido(apellido);
+        misEstudiantes.get(studentPosition).setTelefono(telefono);
+    }
+
     private boolean buscarMatricula(String matricula){
         boolean found = false;
         for (Estudiante estudiante: misEstudiantes) {
