@@ -16,8 +16,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        staticFiles.location("/publico");
+        port(getHerokuPort());
 
+        staticFiles.location("/publico");
         get("/", (request, response) -> {
             Map<String, Object> estudiantes = new HashMap<>();
             estudiantes.put("misEstudiantes", ServicioEstudiantes.getInstance().getMisEstudiantes());
@@ -66,5 +67,13 @@ public class Main {
         });
 
 
+    }
+
+    static int getHerokuPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567;
     }
 }
